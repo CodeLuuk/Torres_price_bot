@@ -26,23 +26,24 @@ def check_price(url):
     r = requests.get(url, timeout=20, headers=headers)
     soup = BeautifulSoup(r.text, "html.parser")
 
-    # Zoek alle <div> elementen met de class van jouw target prijs
-    # Vervang "some-class" door de class die je in Inspect hebt gezien
-    divs = soup.find_all("div", class_= "mb-4 mx-0 p-4 search-result bg-white rounded border row")
+    print("DEBUG HTML:", r.text[:2000])
 
-    for div in divs:
-        strong_tag = div.find("strong")
-        if strong_tag:
-            try:
-                target_price = float(strong_tag.get_text(strip=True))
-                # Als het onder TARGET_PRICE valt, stuur Telegram
-                if target_price <= TARGET_PRICE:
-                    return target_price, url
-            except ValueError:
-                continue  # negeer niet-numerieke inhoud
+    # Selecteer alle strong tags binnen de knop
+    strong_tags = soup.select("a.btn.btn-primary.btn-sm strong")
 
+    for tag in strong_tags:
+        text = tag.get_text(strip=True)
+        # text is bv "540.00USD" → eerst de cijfers eruit halen
+        match = re.search(r"\d+(\.\d+)?", text)
+        if match:
+            price = float(match.group())
+            print("DEBUG gevonden prijs:", price)
+
+            if price <= TARGET_PRICE:
+                return price, url
 
     return None
+
 
 def main():
     send_telegram("Testbericht: Telegram werkt!")

@@ -9,8 +9,8 @@ URLS = [
 TARGET_PRICE = 700
 TARGET_DATE = February 14
 
-TELEGRAM_BOT_TOKEN = "8577775344:AAGAIEcrMhB1zbDNskBcprtwR5AEiVhoQ78"
-TELEGRAM_CHAT_ID = "8208296891"
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
 def send_telegram(message)
     url = fhttpsapi.telegram.orgbot{TELEGRAM_BOT_TOKEN}sendMessage

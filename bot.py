@@ -5,8 +5,8 @@ import re
 
 # URLs van de zoekpagina's
 URLS = [
-    "https://torreshike.com/en/search?from=2026-01-12&to=2026-01-20&currency=USD&persons=2&tab_id=custom&itinerary=%5B%5B5%5D%5D",
-    "https://torreshike.com/en/search?from=2026-01-12&to=2026-01-20&currency=USD&persons=2&tab_id=custom&itinerary=%5B%5B4%5D%5D"
+    "https://torreshike.com/en/search?from=2026-01-14&to=2026-01-14&currency=USD&persons=2&tab_id=custom&itinerary=%5B%5B5%5D%5D",
+    "https://torreshike.com/en/search?from=2026-01-14&to=2026-01-14&currency=USD&persons=2&tab_id=custom&itinerary=%5B%5B4%5D%5D"
 ]
 
 TARGET_PRICE = 700
@@ -22,22 +22,25 @@ def send_telegram(message):
     requests.post(url, data=payload)
 
 def check_price(url):
-    headers = {"User-Agent": "Mozilla/5.0"}  # voorkomt blokkades door website
+    headers = {"User-Agent": "Mozilla/5.0"}
     r = requests.get(url, timeout=20, headers=headers)
     soup = BeautifulSoup(r.text, "html.parser")
 
-    # Alle tekst uit de pagina
-    all_text = soup.get_text(" ", strip=True)
+    # Zoek alle <div> elementen met de class van jouw target prijs
+    # Vervang "some-class" door de class die je in Inspect hebt gezien
+    divs = soup.find_all("div", class_= "mb-4 mx-0 p-4 search-result bg-white rounded border row")
 
-    # Vind alle prijzen in USD
-    prices = re.findall(r"\$?(\d+)\s?USD", all_text)
+    for div in divs:
+        strong_tag = div.find("strong")
+        if strong_tag:
+            try:
+                target_price = float(strong_tag.get_text(strip=True))
+                # Als het onder TARGET_PRICE valt, stuur Telegram
+                if target_price <= TARGET_PRICE:
+                    return target_price, url
+            except ValueError:
+                continue  # negeer niet-numerieke inhoud
 
-    for p in prices:
-        p = float(p)
-        if p <= TARGET_PRICE:
-            # Check ook of de target datum ergens staat
-            if TARGET_DATE in all_text:
-                return p, url
 
     return None
 

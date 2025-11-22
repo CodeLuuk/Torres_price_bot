@@ -12,12 +12,12 @@ TARGET_DATE = "February 14"
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
-def send_telegram(message)
+def send_telegram(message):
     url = fhttpsapi.telegram.orgbot{TELEGRAM_BOT_TOKEN}sendMessage
     payload = {chat_id TELEGRAM_CHAT_ID, text message}
     requests.post(url, data=payload)
 
-def check_price(url)
+def check_price(url):
     r = requests.get(url, timeout=20)
     soup = BeautifulSoup(r.text, html.parser)
 
@@ -28,21 +28,21 @@ def check_price(url)
     import re
     prices = re.findall(r$(d+)sUSD, all_text)
 
-    for p in prices
+    for p in prices:
         p = float(p)
-        if p = TARGET_PRICE
+        if p = TARGET_PRICE:
             # Check ook of 14 feb ergens staat
-            if 14 in all_text or Feb in all_text or February in all_text
+            if 14 in all_text or Feb in all_text or February in all_text:
                 return p, url
 
     return None
 
-def main()
-    for url in URLS
+def main():
+    for url in URLS:
         result = check_price(url)
-        if result
+        if result:
             price, link = result
             send_telegram(f"TORRES ALERT!nPrijs {price} USDnURL {link}")
 
-if __name__ == __main__
+if __name__ == __main__:
     main()

@@ -49,6 +49,7 @@ def main():
     
     for url in URLS:
         result = check_price(url)
+        print("DEBUG result:", result)
         if result:
             price, link = result
             send_telegram(f"🔥 TORRES ALERT!\nPrijs: {price} USD\nURL: {link}")

@@ -49,7 +49,7 @@ def check_price(url):
 
 
 def main():
-    send_telegram("Testbericht: Telegram werkt!")
+    # send_telegram("Testbericht: Telegram werkt!")
     
     for url in URLS:
         result = check_price(url)

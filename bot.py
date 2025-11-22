@@ -6,7 +6,7 @@ URLS = [
     httpstorreshike.comensearchfrom=2026-01-12&to=2026-01-20&currency=USD&persons=2&tab_id=custom&itinerary=%5B%5B4%5D%5D
 ]
 
-TARGET_PRICE = 200
+TARGET_PRICE = 700
 TARGET_DATE = February 14
 
 TELEGRAM_BOT_TOKEN = "8577775344:AAGAIEcrMhB1zbDNskBcprtwR5AEiVhoQ78"

@@ -42,7 +42,7 @@ def main()
         result = check_price(url)
         if result
             price, link = result
-            send_telegram(f🔥 TORRES ALERT!nPrijs {price} USDnURL {link})
+            send_telegram(f"TORRES ALERT!nPrijs {price} USDnURL {link}")
 
 if __name__ == __main__
     main()

@@ -9,7 +9,7 @@ URLS = [
     "https://torreshike.com/en/search?from=2026-01-14&to=2026-01-14&currency=USD&persons=2&tab_id=custom&itinerary=%5B%5B4%5D%5D"
 ]
 
-TARGET_PRICE = 300
+TARGET_PRICE = 450
 TARGET_DATE = "February 14"
 
 # Haal secrets uit GitHub Actions
